@@ -35,3 +35,9 @@ pipenv-graph.png
 .terraform/
 *.tfvars.auto
 *.tfvars
+*.lock.hcl
+
+# ignore ansible files
+ansible.log
+ansible.retry
+ansible.cfg

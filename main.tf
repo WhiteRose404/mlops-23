@@ -38,7 +38,7 @@ resource "aws_instance" "manager_bastion" {
     iam_instance_profile = "admin-Role"
 
     provisioner "local-exec" {
-        command = "python3 add_hosts.py ${self.public_ip}"
+        command = "echo '${templatefile("templates/hosts.yaml", { ip = self.public_ip, user= var.user, key_path= var.key_path} )}' > inventory/hosts.yaml && python3 config/add_hosts.py ${self.public_ip}"
     }
     tags = {
         Name = "manager_bastion"
