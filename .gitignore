@@ -26,3 +26,18 @@ pipfile.lock
 pipenv.lock
 # ignore python installer files
 pipenv-graph.png
+
+
+# ignore terraform files
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform/
+*.tfvars.auto
+*.tfvars
+*.lock.hcl
+
+# ignore ansible files
+ansible.log
+ansible.retry
+ansible.cfg
