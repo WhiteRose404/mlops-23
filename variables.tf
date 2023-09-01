@@ -1,6 +1,6 @@
 variable "ports" {
     type = list(number)
-    default = [22, 80, 443]
+    default = [22, 80, 443, 8080]
 }
 
 variable "user" {
