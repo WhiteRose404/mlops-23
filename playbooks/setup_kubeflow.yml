@@ -16,3 +16,14 @@
     - name: "set up the k8s cluster"
       shell: "cd kubeflow-manifests/deployments/vanilla/terraform && make deploy"
       when: k8s_cluster_status.rc != 0
+    - name: "copy all the kubeflow directories"
+      copy:
+        src: "../config/kubeflow"
+        dest: "/tmp/kubeflow-manifests"
+        mode: 0755
+    - name: "enable kbp to be runned from notebook"
+      shell: "kubectl apply -f /tmp/kubeflow-manifests/access-kbp-jupyter.yml"
+    - name: "add kserver user"
+      shell: "kubectl apply -f /tmp/kubeflow-manifests/set_kserver_account.yml"
+    - name: "set the RBAC authorazation"
+      shell: "kubectl apply -f /tmp/kubeflow-manifests/add_auto_kserver.yml"
