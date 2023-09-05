@@ -5,12 +5,23 @@ import sys
 def add_address(lines):
     # retrieve the IP
     ip_address = sys.argv[1]
+    user = sys.argv[2]
+    key_path = sys.argv[3]
+
     for index in range(len(lines)):
-        if "Host mehdiCloud" in lines[index]:
+        if "Host bastion" in lines[index]:
             # well check if this line inded is the hostname declaration
             # check also if the there is even a next line
-            lines[index + 1] = f"    HostName {ip_address}\n"
-            return;
+            # pop the rest of the lines
+            while len(lines) > index - 1:
+                lines.pop();
+            break;
+    
+    lines.append(f"Host bastion\n");
+    lines.append(f"    HostName {ip_address}\n");
+    lines.append(f"    User {user}\n");
+    lines.append(f"    IdentityFile {key_path}\n");
+    lines.append("# Don't add anything below this line\n")
     # if the host is not found
     # lines.append("\n")
     # lines.append("Host mehdiCloud\n")

@@ -13,6 +13,9 @@ def get_credentials(url):
 
 def store_aws_credentials(access_key, secret_key, token):
     # store the credentials in the file
+    aws = Path(f"{Path.home()}/.aws");
+    if not aws.exists():
+        aws.mkdir();
     with open(f"{Path.home()}/.aws/credentials", 'w') as file:
         file.write(f"[default]\naws_access_key_id = {access_key}\naws_secret_access_key = {secret_key}\naws_session_token = {token}\n");
 

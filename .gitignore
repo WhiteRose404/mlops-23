@@ -41,4 +41,6 @@ pipenv-graph.png
 ansible.log
 ansible.retry
 ansible.cfg
+inventory/*
 inventory/hosts.yaml
+*/inventory/hosts.yaml

@@ -31,14 +31,14 @@ resource "aws_security_group" "manager_bastion" {
 
 resource "aws_instance" "manager_bastion" {
     # ami = data.aws_ami.manager.id
-    ami = "ami-0d95f0df8213c9a83"
+    ami = "ami-09da1b080297bcf34"
     instance_type = "t2.medium"
-    key_name = "paris_default"
+    key_name = "outside_use"
     vpc_security_group_ids = [aws_security_group.manager_bastion.id]
     iam_instance_profile = "admin-Role"
 
     provisioner "local-exec" {
-        command = "echo '${templatefile("templates/hosts.yaml", { ip = self.public_ip, user= var.user, key_path= var.key_path} )}' > inventory/hosts.yaml && python3 config/add_hosts.py ${self.public_ip}"
+        command = "echo '${templatefile("templates/hosts.yaml", { ip = self.public_ip, user= var.user, key_path= var.key_path } )}' > inventory/hosts.yaml && python3 config/add_hosts.py ${self.public_ip} ${var.user} ${var.key_path}"
     }
     tags = {
         Name = "manager_bastion"

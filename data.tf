@@ -1,9 +1,10 @@
-# data "aws_ami" "manager" {
-#     filter {
-#         name = "id"
-#         values = ["ami-0d95f0df8213c9a83"]
-#     }
-# }
+data "aws_ami" "manager" {
+    most_recent = true
+    filter {
+        name = "name"
+        values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+    }
+}
 
 data "aws_vpc" "default" {
     default = true
