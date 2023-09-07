@@ -13,7 +13,7 @@ def add_address(lines):
             # well check if this line inded is the hostname declaration
             # check also if the there is even a next line
             # pop the rest of the lines
-            while len(lines) > index - 1:
+            while len(lines) > index:
                 lines.pop();
             break;
     

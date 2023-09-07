@@ -1,0 +1,18 @@
+- name: "set up kubeflow"
+  gather_facts: false
+  hosts: manager
+
+  vars:
+    ansible_shell_executable: /bin/bash
+    region: "eu-west-3"
+    cluster: "my-kuby"
+  tasks:
+    - name: "make a new directory"
+      file:
+        path: "/home/ubuntu/provision"
+        state: directory
+        mode: 0755
+    - name: "clone the kubeflow repo"
+      debug: 
+        msg: "weeeeeeeeelp"
+      when: "'/home/ubuntu/provision' is not exists" # when the file exists skip to the next task

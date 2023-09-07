@@ -32,6 +32,7 @@ resource "aws_security_group" "manager_bastion" {
 resource "aws_instance" "manager_bastion" {
     # ami = data.aws_ami.manager.id
     ami = "ami-09da1b080297bcf34"
+    # ami = "ami-05f59b7886887cd3f" # already has the config files
     instance_type = "t2.medium"
     key_name = "outside_use"
     vpc_security_group_ids = [aws_security_group.manager_bastion.id]

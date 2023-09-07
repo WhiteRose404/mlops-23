@@ -4,7 +4,7 @@ metadata:
   name: minio-kserve-secret
   namespace: kubeflow-user-example-com
   annotations:
-     serving.kserve.io/s3-endpoint: "172.20.248.247:9000"
+     serving.kserve.io/s3-endpoint: "172.20.226.80:9000"
      serving.kserve.io/s3-usehttps: "0"
      serving.kserve.io/s3-useanoncredential: "false"
 type: Opaque

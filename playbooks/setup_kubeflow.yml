@@ -1,11 +1,11 @@
 - name: "set up kubeflow"
   gather_facts: false
   hosts: manager
-  # environment:
-  #   - KUBEFLOW_RELEASE_VERSION ="v1.7.0"
-  # use the bash shell instead of sh
+
   vars:
     ansible_shell_executable: /bin/bash
+    region: "eu-west-3"
+    cluster: "my-kuby"
   tasks:
     - name: "did you already set up the k8s cluster?"
       shell: "kubectl get nodes"
@@ -23,14 +23,21 @@
     - name: "source the bashrc"
       shell: "source ~/.bashrc"
       when: k8s_cluster_status.rc != 0
-    # - name: "define the kubeflow version"
-    #   shell: "export KUBEFLOW_RELEASE_VERSION=v1.7.0"
-    #   when: k8s_cluster_status.rc != 0
-    # - name: "define the aws release"
-    #   shell: "export AWS_DEFAULT_REGION=v1.7.0-aws-b1.0.2"
-    #   when: k8s_cluster_status.rc != 0
-    - name: "download the kubeflow manifests"
-      shell: "git clone https://github.com/awslabs/kubeflow-manifests.git && cd kubeflow-manifests && git checkout ${AWS_RELEASE_VERSION} && git clone --branch ${KUBEFLOW_RELEASE_VERSION} https://github.com/kubeflow/manifests.git upstream"
+    - name: "did we already clone the kubeflow repo?"
+      shell: "ls /home/ubuntu/provision"
+      register: kubeflow_repo_status
+      ignore_errors: true
+    - name: "repo does not exists:clone the kubeflow repo"
+      shell: "git clone https://github.com/WhiteRose404/provision.git"
+      when: kubeflow_repo_status.rc != 0
+    - name: "repo exists: update the repo"
+      shell: "cd /home/ubuntu/provision && git pull"
+      when: kubeflow_repo_status.rc == 0
+    - name: "specify region"
+      environment: 
+        REGION: "{{ region }}"
+        NAME: "{{ cluster }}"
+      shell: "echo 'cluster_name = \"{{ NAME }}\"\ncluster_region = \"{{ REGION }}\"' > /home/ubuntu/provision/deployments/vanilla/terraform/sample.auto.tfvars"
       when: k8s_cluster_status.rc != 0
     - name: "install make"
       apt:
@@ -46,21 +53,8 @@
     - name: "run the IAM role updater script"
       shell: "python3 /tmp/iam-role-updater.py"
     - name: "install tools"
-      shell: "cd kubeflow-manifests && make tools"
+      shell: "cd provision && make install-tools"
       when: k8s_cluster_status.rc != 0 
-    # - name: "set up the k8s cluster"
-    #   shell: "cd /home/ubuntu/kubeflow/kubeflow-manifests/deployments/vanilla/terraform && make deploy"
-    #   when: k8s_cluster_status.rc != 0
-    - name: "copy all the kubeflow directories"
-      copy:
-        src: "../config/kubeflow/"
-        dest: "/tmp/kubeflow-manifests/kubeflow"
-        mode: 0755
-      tags: kubeflow
-      # to run only this task: ansible-playbook -i hosts playbooks/setup_kubeflow.yml --tags "kubeflow"
-    # - name: "enable kbp to be runned from notebook"
-    #   shell: "kubectl apply -f /tmp/kubeflow-manifests/kubeflow/access-kbp-jupyter.yml"
-    # - name: "add kserver user"
-    #   shell: "kubectl apply -f /tmp/kubeflow-manifests/kubeflow/set_kserver_account.yml"
-    # - name: "set the RBAC authorazation"
-    #   shell: "kubectl apply -f /tmp/kubeflow-manifests/kubeflow/add_auto_kserver.yml"
+    - name: "set up the k8s cluster"
+      shell: "cd /home/ubuntu/provision/deployments/vanilla/terraform && make deploy"
+      when: k8s_cluster_status.rc != 0

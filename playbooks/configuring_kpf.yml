@@ -1,0 +1,22 @@
+- name: "set up kubeflow"
+  gather_facts: false
+  hosts: manager
+
+  vars:
+    ansible_shell_executable: /bin/bash
+    region: "eu-west-3"
+    cluster: "my-kuby"
+  tasks:
+    - name: "copy all the kubeflow directories"
+      copy:
+        src: "../config/kubeflow/"
+        dest: "/tmp/provision/kubeflow"
+        mode: 0755
+      tags: kubeflow
+      # to run only this task: ansible-playbook -i hosts playbooks/setup_kubeflow.yml --tags "kubeflow"
+    - name: "enable kbp to be runned from notebook"
+      shell: "kubectl apply -f /tmp/provision/kubeflow/access-kbp-jupyter.yml"
+    - name: "add kserver user"
+      shell: "kubectl apply -f /tmp/provision/kubeflow/set_kserver_account.yml"
+    - name: "set the RBAC authorazation"
+      shell: "kubectl apply -f /tmp/provision/kubeflow/add_auto_kserver.yml"
