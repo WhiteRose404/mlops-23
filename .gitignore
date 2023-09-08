@@ -44,3 +44,9 @@ ansible.cfg
 inventory/*
 inventory/hosts.yaml
 */inventory/hosts.yaml
+
+
+# node files
+node_modules/
+build/
+

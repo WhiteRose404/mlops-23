@@ -1,6 +1,0 @@
-linux:
-    hosts:
-        manager:
-            ansible_host: 52.47.108.127
-            ansible_user: ubuntu
-            ansible_ssh_private_key_file: /media/high-sparrow/Documents/studies/Master/.keys/outside_use_aws.pem

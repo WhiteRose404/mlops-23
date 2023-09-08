@@ -1,2 +1,0 @@
-simplejson==3.17.6
-requests==2.25.0
