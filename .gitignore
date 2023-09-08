@@ -42,3 +42,8 @@ ansible.log
 ansible.retry
 ansible.cfg
 inventory/hosts.yaml
+
+# ignore node files
+node_modules/
+build/
+
