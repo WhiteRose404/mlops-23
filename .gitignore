@@ -50,3 +50,8 @@ inventory/hosts.yaml
 node_modules/
 build/
 
+# flask files
+instance/
+.env
+bin/
+lib*
