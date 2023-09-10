@@ -41,9 +41,17 @@ pipenv-graph.png
 ansible.log
 ansible.retry
 ansible.cfg
+inventory/*
 inventory/hosts.yaml
+*/inventory/hosts.yaml
 
-# ignore node files
+
+# node files
 node_modules/
 build/
 
+# flask files
+instance/
+.env
+bin/
+lib*
