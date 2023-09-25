@@ -1,0 +1,58 @@
+.git
+# ignore jupyter notebook checkpoints
+.ipynb_checkpoints
+# ignore python virtual environment
+venv
+# ignore python compiled files
+*.pyc
+# ignore python cache files
+__pycache__
+# ignore python distribution files
+*.egg-info
+# ignore python installer files
+pip-log.txt
+# ignore python installer files
+pip-delete-this-directory.txt
+# ignore python installer files
+pip-selfcheck.json
+# ignore python installer files
+pip-wheel-metadata
+# ignore python installer files
+pipenv*
+# ignore python installer files
+pipfile*
+# ignore python installer files
+pipfile.lock
+# ignore python installer files
+pipenv.lock
+# ignore python installer files
+pipenv-graph.png
+
+
+# ignore terraform files
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform/
+*.tfvars.auto
+*.tfvars
+*.lock.hcl
+
+# ignore ansible files
+ansible.log
+ansible.retry
+ansible.cfg
+inventory/*
+inventory/hosts.yaml
+*/inventory/hosts.yaml
+
+
+# node files
+node_modules/
+build/
+
+# flask files
+instance/
+.env
+bin/
+lib*
