@@ -11,7 +11,7 @@ export default async function fetchResult({ file, span }) {
         span: span
     }
     try{
-        if(span !== 24){
+        if(parseInt(span) !== 24){
             return {
                 status: "failed",
                 data: "Unsupported model"
